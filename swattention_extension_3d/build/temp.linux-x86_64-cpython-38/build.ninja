@@ -1,0 +1,36 @@
+ninja_required_version = 1.3
+cxx = /apps/compilers/gcc/9.2.0/bin/g++
+nvcc = /apps/chpc/cuda/12.4/bin/nvcc
+
+cflags = -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/mnt/lustre/users/sntanzi/swattention_extension_3d/include -I/home/sntanzi/miniconda3/envs/unetr_pp/lib/python3.8/site-packages/torch/include -I/home/sntanzi/miniconda3/envs/unetr_pp/lib/python3.8/site-packages/torch/include/torch/csrc/api/include -I/home/sntanzi/miniconda3/envs/unetr_pp/lib/python3.8/site-packages/torch/include/TH -I/home/sntanzi/miniconda3/envs/unetr_pp/lib/python3.8/site-packages/torch/include/THC -I/apps/chpc/cuda/12.4/include -I/home/sntanzi/miniconda3/envs/unetr_pp/include/python3.8 -c
+post_cflags = -O3 -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=swattention -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++17
+cuda_cflags = -I/mnt/lustre/users/sntanzi/swattention_extension_3d/include -I/home/sntanzi/miniconda3/envs/unetr_pp/lib/python3.8/site-packages/torch/include -I/home/sntanzi/miniconda3/envs/unetr_pp/lib/python3.8/site-packages/torch/include/torch/csrc/api/include -I/home/sntanzi/miniconda3/envs/unetr_pp/lib/python3.8/site-packages/torch/include/TH -I/home/sntanzi/miniconda3/envs/unetr_pp/lib/python3.8/site-packages/torch/include/THC -I/apps/chpc/cuda/12.4/include -I/home/sntanzi/miniconda3/envs/unetr_pp/include/python3.8 -c
+cuda_post_cflags = -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options ''"'"'-fPIC'"'"'' -O3 --use_fast_math -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=swattention -D_GLIBCXX_USE_CXX11_ABI=0 -gencode=arch=compute_70,code=sm_70 -ccbin /apps/compilers/gcc/9.2.0/bin/gcc -std=c++17
+cuda_dlink_post_cflags = 
+ldflags = 
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule cuda_compile
+  depfile = $out.d
+  deps = gcc
+  command = $nvcc --generate-dependencies-with-compile --dependency-output $out.d $cuda_cflags -c $in -o $out $cuda_post_cflags
+
+
+
+
+
+build /mnt/lustre/users/sntanzi/swattention_extension_3d/build/temp.linux-x86_64-cpython-38/av_bw_kernel.o: cuda_compile /mnt/lustre/users/sntanzi/swattention_extension_3d/av_bw_kernel.cu
+build /mnt/lustre/users/sntanzi/swattention_extension_3d/build/temp.linux-x86_64-cpython-38/av_fw_kernel.o: cuda_compile /mnt/lustre/users/sntanzi/swattention_extension_3d/av_fw_kernel.cu
+build /mnt/lustre/users/sntanzi/swattention_extension_3d/build/temp.linux-x86_64-cpython-38/qk_rpb_bw_kernel.o: cuda_compile /mnt/lustre/users/sntanzi/swattention_extension_3d/qk_rpb_bw_kernel.cu
+build /mnt/lustre/users/sntanzi/swattention_extension_3d/build/temp.linux-x86_64-cpython-38/qk_rpb_fw_kernel.o: cuda_compile /mnt/lustre/users/sntanzi/swattention_extension_3d/qk_rpb_fw_kernel.cu
+build /mnt/lustre/users/sntanzi/swattention_extension_3d/build/temp.linux-x86_64-cpython-38/swattention.o: compile /mnt/lustre/users/sntanzi/swattention_extension_3d/swattention.cpp
+
+
+
+
+
+

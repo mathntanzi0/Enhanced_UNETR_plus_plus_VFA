@@ -1,0 +1,6 @@
+# ninja log v5
+2	28331	1724980890000000000	/mnt/lustre/users/sntanzi/swattention_extension_3d/build/temp.linux-x86_64-cpython-38/swattention.o	b5349ce5f17364e2
+2	46633	1724980908000000000	/mnt/lustre/users/sntanzi/swattention_extension_3d/build/temp.linux-x86_64-cpython-38/av_fw_kernel.o	8288b97edc36c386
+2	48053	1724980910000000000	/mnt/lustre/users/sntanzi/swattention_extension_3d/build/temp.linux-x86_64-cpython-38/qk_rpb_fw_kernel.o	2860e726c1880768
+1	48600	1724980910000000000	/mnt/lustre/users/sntanzi/swattention_extension_3d/build/temp.linux-x86_64-cpython-38/av_bw_kernel.o	3a805fe73c971384
+2	48693	1724980910000000000	/mnt/lustre/users/sntanzi/swattention_extension_3d/build/temp.linux-x86_64-cpython-38/qk_rpb_bw_kernel.o	917ace671ae88d8
