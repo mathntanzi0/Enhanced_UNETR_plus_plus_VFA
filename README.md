@@ -115,7 +115,7 @@ Each model variant (`unetr_plus_plus_VFA_native`, `unetr_plus_plus_VFA`, `unetr_
 
 ## Evaluation
 
-To reproduce the results of UNETR++:
+To reproduce the results of the models:
 
 1. Download the models' weights from the following folder: [VFA UNETR++ weights folder](https://drive.google.com/drive/folders/1wc1g7aB0DO1ZIj5pIMpTdo04_68Aj3g-).
    
