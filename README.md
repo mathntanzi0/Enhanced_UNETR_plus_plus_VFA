@@ -112,3 +112,39 @@ Each model variant (`unetr_plus_plus_VFA_native`, `unetr_plus_plus_VFA`, `unetr_
 - **model_components**: Custom layers for the ACDC dataset.
 - **unetr_pp_acdc.py**: Main script for ACDC segmentation.
 
+
+## Evaluation
+
+To reproduce the results of UNETR++:
+
+1. Download the models' weights from the following folder: [VFA UNETR++ weights folder](https://drive.google.com/drive/folders/1wc1g7aB0DO1ZIj5pIMpTdo04_68Aj3g-).
+   
+   - Place the `model_final_checkpoint.model` in the corresponding folder:
+   ```shell
+   unetr_pp/evaluation/unetr_pp_acdc_checkpoint/unetr_pp/3d_fullres/Task001_ACDC/unetr_pp_trainer_acdc__unetr_pp_Plansv2.1/fold_0/
+   ```
+   Then, run:
+   ```shell
+   bash evaluation_scripts/run_evaluation_acdc.sh
+   ```
+
+2. Download the Synapse weights from the folder linked above, and paste `model_final_checkpoint.model` in the following path:
+   ```shell
+   unetr_pp/evaluation/unetr_pp_synapse_checkpoint/unetr_pp/3d_fullres/Task002_Synapse/unetr_pp_trainer_synapse__unetr_pp_Plansv2.1/fold_0/
+   ```
+   Then, run:
+   ```shell
+   python unetr_pp/inference/predict_simple.py
+   python unetr_pp/inference_synapse.py
+   ```
+
+3. Download the BRaTs weights from the folder linked above, and paste `model_final_checkpoint.model` in the following path:
+   ```shell
+   unetr_pp/evaluation/unetr_pp_lung_checkpoint/unetr_pp/3d_fullres/Task003_tumor/unetr_pp_trainer_tumor__unetr_pp_Plansv2.1/fold_0/
+   ```
+   Then, run:
+   ```shell
+   python unetr_pp/inference/predict_simple.py
+   python unetr_pp/inference_tumor.py
+   ```
+
